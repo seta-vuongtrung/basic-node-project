@@ -35,7 +35,7 @@ router.post("/", (req: Request, res: Response): void => {
     return;
   }
 
-  const existedUser = UserService.getUserById(parseInt(user.id));
+  const existedUser = UserService.getUserById(parseInt(id));
   if (existedUser) {
     res.status(400).send({
       error: "BAD REQUEST",

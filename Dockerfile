@@ -1,4 +1,4 @@
-FROM node:lts as builder
+FROM node:20 as builder
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -12,7 +12,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:lts-slim
+FROM node:20-slim
 
 ENV NODE_ENV production
 USER node
@@ -27,5 +27,5 @@ RUN npm ci --production
 
 COPY --from=builder /usr/src/app/dist ./dist
 
-EXPOSE 8080
-CMD [ "node", "dist/index.js" ]
+EXPOSE 8000
+CMD [ "npm", "start" ]

@@ -1,7 +1,6 @@
 BINARY_NAME := basic-node-project
 PORT := 8000
 TAG_DEV := dev
-TAG_UAT := uat
 # only for mac m1
 DOCKER_ARG := --platform linux/amd64 
 
@@ -11,6 +10,7 @@ build-docker:
 run-docker:
 	docker run ${DOCKER_ARG} -d -p $(PORT):$(PORT) $(BINARY_NAME)
 
+#docker login registry-1.docker.io
 push-dev:
-	docker tag $(BINARY_NAME) asia-southeast1-docker.pkg.dev/rse-sep-ii/rse-sep-ii/$(BINARY_NAME):$(TAG_DEV)
-	docker push asia-southeast1-docker.pkg.dev/rse-sep-ii/rse-sep-ii/$(BINARY_NAME):$(TAG_DEV)
+	docker tag $(BINARY_NAME) registry-1.docker.io/vuongtrungit9x/$(BINARY_NAME):$(TAG_DEV)
+	docker push registry-1.docker.io/vuongtrungit9x/$(BINARY_NAME):$(TAG_DEV)

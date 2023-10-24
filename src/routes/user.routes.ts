@@ -23,6 +23,35 @@ router.get("/", (req: Request, res: Response): void => {
   res.status(200).send(users);
 });
 
+router.post("/", (req: Request, res: Response): void => {
+  const user = req.body;
+  const { id, name, email } = user;
+
+  if (!id || !name || !email) {
+    res.status(400).send({
+      error: "BAD REQUEST",
+      message: `Invalid input user id, name, email are required!`,
+    });
+    return;
+  }
+
+  const existedUser = UserService.getUserById(parseInt(user.id));
+  if (existedUser) {
+    res.status(400).send({
+      error: "BAD REQUEST",
+      message: `Duplicated user with id ${id}!`,
+    });
+    return;
+  }
+
+  const newUser = UserService.createUser(user);
+
+  res.status(200).json({
+    data: newUser,
+    message: `Create new user successful!`,
+  });
+});
+
 router.delete("/:id", (req: Request, res: Response): void => {
   const id = req.params.id;
 

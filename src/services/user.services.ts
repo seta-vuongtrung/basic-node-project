@@ -29,6 +29,10 @@ export default {
   getUserById(id: number): User | undefined {
     return users.find((user) => user.id == id);
   },
+  createUser(user: User): User | undefined {
+    users.push(user);
+    return user;
+  },
   deleteUserById(id: number) {
     const index = users.findIndex((user) => user.id == id);
     if (index > -1) {

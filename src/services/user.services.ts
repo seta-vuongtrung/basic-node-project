@@ -29,4 +29,13 @@ export default {
   getUserById(id: number): User | undefined {
     return users.find((user) => user.id == id);
   },
+  deleteUserById(id: number) {
+    const index = users.findIndex((user) => user.id == id);
+    if (index > -1) {
+      // only splice array when item is found
+      users.splice(index, 1); // 2nd parameter means remove one item only
+      return true;
+    }
+    return false;
+  },
 };

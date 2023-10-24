@@ -23,4 +23,20 @@ router.get("/", (req: Request, res: Response): void => {
   res.status(200).send(users);
 });
 
+router.delete("/:id", (req: Request, res: Response): void => {
+  const id = req.params.id;
+
+  const deleted = UserService.deleteUserById(parseInt(id));
+  if (deleted) {
+    res.status(200).send({
+      message: `Delete user with id ${id} successful!`,
+    });
+  } else {
+    res.status(404).json({
+      error: "NOT FOUND",
+      message: `Not found user with id ${id}!`,
+    });
+  }
+});
+
 export { router };

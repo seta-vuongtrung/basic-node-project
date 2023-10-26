@@ -10,7 +10,8 @@ build-docker:
 run-docker:
 	docker run ${DOCKER_ARG} -d -p $(PORT):$(PORT) $(BINARY_NAME)
 
-#docker login registry-1.docker.io
-push-dev:
-	docker tag $(BINARY_NAME) registry-1.docker.io/vuongtrungit9x/$(BINARY_NAME):$(TAG_DEV)
-	docker push registry-1.docker.io/vuongtrungit9x/$(BINARY_NAME):$(TAG_DEV)
+# gcloud auth configure-docker \
+    gcr.io
+push-gcr:
+	docker tag $(BINARY_NAME) gcr.io/woven-operative-403115/$(BINARY_NAME):$(TAG_DEV)
+	docker push gcr.io/woven-operative-403115/$(BINARY_NAME):$(TAG_DEV)

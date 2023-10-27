@@ -56,4 +56,76 @@ describe("User routes", () => {
       expect(res.body.message).toEqual("Not found user with id 4!");
     });
   });
+
+  describe("Create User", () => {
+    test("missing user id should return error with status code 400.", async () => {
+      const payload = { name: "john", email: "john@gmail.com" };
+
+      const res = await request(app)
+        .post("/users")
+        .send(payload)
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.message).toEqual(
+        "Invalid input user id, name, email are required!"
+      );
+    });
+
+    test("missing user name should return error with status code 400.", async () => {
+      const payload = { id: 1, name: "", email: "john@gmail.com" };
+
+      const res = await request(app)
+        .post("/users")
+        .send(payload)
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.message).toEqual(
+        "Invalid input user id, name, email are required!"
+      );
+    });
+
+    test("missing email should return error with status code 400.", async () => {
+      const payload = { id: 1, name: "john", email: "" };
+
+      const res = await request(app)
+        .post("/users")
+        .send(payload)
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.message).toEqual(
+        "Invalid input user id, name, email are required!"
+      );
+    });
+
+    test("valid body should return status code 200 & data", async () => {
+      const payload = { id: 6, name: "john", email: "john@gmail.com" };
+
+      const res = await request(app)
+        .post("/users")
+        .send(payload)
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json");
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.message).toEqual("Create new user successful!");
+    });
+
+    test("found duplicate user should return status code 400.", async () => {
+      const payload = { id: 6, name: "john", email: "john@gmail.com" };
+
+      const res = await request(app)
+        .post("/users")
+        .send(payload)
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json");
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.message).toEqual("Duplicated user with id 6!");
+    });
+  });
 });
